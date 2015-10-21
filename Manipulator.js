@@ -26,7 +26,7 @@ var Manipulator = function(argument) {
      */
     this.id = function(ele, id) {
         if (this.IsUnDefined(id)) {
-            return document.getElementById(id)
+            return document.getElementById(ele)
         } else {
             return ele.document.getElementById(id)
         }
