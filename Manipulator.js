@@ -1,6 +1,6 @@
 /**
  *  this javascript library is for people to actually
- *  understand that how to manipulat the DOM in the javascript,
+ *  understand that how to manipulate the DOM in the javaScript,
  *  and how to find the short way when we deal with the DOM
  */
 
@@ -38,6 +38,10 @@ var Manipulator = function(argument) {
      * @return {[type]}
      */
     this.one = function(ele, query) {
+        if (this.IsUnDefined(query)) {
+            query = ele
+            ele = document
+        };
         return ele.querySelector(query);
     }
 
@@ -118,4 +122,48 @@ var Manipulator = function(argument) {
         ele.insertAdjacentHTML('beforeend', html)
     }
 
+    this.scrollIntoView = function(ele) {
+        if (ele.scrollIntoView) {
+            ele.scrollIntoView(true)
+        };
+    }
+
+    /**
+     * this function is for scroll the element 
+     * to the visible view by y-coordinate
+
+     * @param  {[type]} ele       [description]
+     * @param  {[type]} container the most top element which have set the overflow or the body
+     * @return {[type]}           [description]
+     */
+    this.scrollView = function(ele, container) {
+        //if not set the container,
+        //then use the document.body
+        container = container || document.body
+        var y = ele.offsetTop;
+        var node = ele;
+        // the loop for calculate the element position on the Y-axis
+        while (node.offsetParent && node.offsetParent != container) {
+            node = node.offsetParent;
+            y += node.offsetTop;
+        }
+        // the gutter is a makeshift to make sure dont scroll too far
+        var gutter = ele.clientHeight + 60;
+        // do the scroll
+        container.scrollTop = y - gutter;
+    }
+
+    /*
+    The Element.clientHeight read-only property 
+    is zero for elements with no CSS or inline 
+    layout boxes, otherwise it's the inner height
+    of an element in pixels, including padding 
+    but not the horizontal scrollbar height, border, or margin.
+
+    clientHeight can be calculated as CSS height
+     + CSS padding - height of horizontal scrollbar (if present).
+     */
+    this.h = function() {
+
+    }
 }
